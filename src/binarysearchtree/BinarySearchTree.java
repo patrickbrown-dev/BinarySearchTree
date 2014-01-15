@@ -6,6 +6,8 @@
 
 package binarysearchtree;
 
+import java.util.Iterator;
+
 /**
  * 
  * @author patrick.brown
@@ -73,6 +75,8 @@ public class BinarySearchTree
         click on myBST and choose View Value to see a diagram of your tree.
         */
        
+        System.out.println("test");
+
         Iterator inOrderIter = myBST.inOrderIterator();
 
         String treeStr = printValues(inOrderIter);
@@ -80,11 +84,11 @@ public class BinarySearchTree
         System.out.println("in order");
         System.out.println(treeStr);
        
-        Iterator levelOrderIter = myBST.levelOrderIterator();
+        /*Iterator levelOrderIter = myBST.levelOrderIterator();
         treeStr = printValues(levelOrderIter);
 
         System.out.println("level order");
-        System.out.println(treeStr); 
+        System.out.println(treeStr); */
        
         /* test cases for remove: 
         8 a left hand leaf - no promotion
@@ -97,7 +101,8 @@ public class BinarySearchTree
         the root
         */
       
-        /**---try{
+        /*
+        try{
             myBST.removeElement(new Integer (30));
         } catch (ElementNotFoundException enfex){
             System.out.print(enfex.getMessage());
@@ -106,13 +111,14 @@ public class BinarySearchTree
         } catch(Throwable ex){
             System.out.print(ex.getMessage());
         }
+        */
     }
    
     public static String printValues(Iterator iter){
         StringBuffer sb = new StringBuffer();
         while(iter.hasNext())
-            sb.append(iter.next().toString()).append(" ");
+            sb.append(iter.next()).append(" ");
         return sb.toString();
-    */}
+    }
     
 }

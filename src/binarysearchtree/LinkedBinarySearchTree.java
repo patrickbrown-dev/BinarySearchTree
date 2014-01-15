@@ -282,17 +282,6 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
     }
 
     /**
-     * Because we get array IndexOutOfBounds errors when we add objects out of
-     * order onto ArrayLists, we need to populate potential children with null
-     * objects.
-     */
-    private void generatePotentialChildren(int index)
-    {        
-        this.tree.add(getLeft(index), null);
-        this.tree.add(getRight(index), null);
-    }
-
-    /**
      * At times we'll need to grow the tree. We'll take the index at the end of
      * an add operation and see if we need to grow the tree to accommodate the
      * changes.
@@ -306,5 +295,29 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
         while(required_size > this.tree.size()){
             this.tree.add(null);
         }
+    }
+
+    public Iterator<T> inOrderIterator() {
+
+        Iterator<T> it = new Iterator<T>() {
+
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < tree.size();
+            }
+
+            @Override
+            public T next() {
+                return tree.get(currentIndex++);
+            }
+
+            @Override
+            public void remove() {
+                // TODO Auto-generated method stub
+            }
+        };
+        return it;
     }
 }
