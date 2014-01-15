@@ -16,7 +16,7 @@ import java.util.Iterator;
  */
 public class LinkedBinarySearchTree<T extends Comparable<? super T>>
 {
-    private ArrayList<T> tree;
+    private ArrayList<T> tree = new ArrayList<>();
     int ROOT_KEY = 1;
     
     /**
@@ -24,7 +24,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
      */
     public void LinkedBinarySearchTree()
     {
-        this.tree = new ArrayList<>();
+        //this.tree = new ArrayList<>();
     }
     
     /**
@@ -38,14 +38,19 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
             this.tree.set(ROOT_KEY, o);
         } else {
             addHelper(ROOT_KEY, o);
-        }*/
-        
-        
+        }        
         try {
             this.tree.get(ROOT_KEY);
             addHelper(ROOT_KEY, o);
         } catch(NullPointerException e) {
             this.tree.set(ROOT_KEY, o);
+        }*/
+        if(this.tree.isEmpty()){
+            // set the object at index 0 to null
+            this.tree.add(0, null); 
+            this.tree.add(ROOT_KEY, o);
+        } else {
+            addHelper(ROOT_KEY, o);
         }
     }
     
@@ -211,7 +216,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
             to_return = findInorderSucessor(right_key); 
             // these next two lines connect the IOS to the departing node's
             // children.
-            //result.left <- node.left;  
+            // result.left <- node.left;  
             setLeft(key, left_value);
             
             if(to_return != right_value) {
