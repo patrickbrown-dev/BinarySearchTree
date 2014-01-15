@@ -24,7 +24,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
      */
     public void LinkedBinarySearchTree()
     {
-        //this.tree = new ArrayList<>();
+        this.tree = new ArrayList<>();
     }
     
     /**
@@ -289,5 +289,10 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
     {        
         this.tree.add(getLeft(index), null);
         this.tree.add(getRight(index), null);
+    }
+    
+    private void growTree(int index)
+    {
+        this.tree.ensureCapacity(index);
     }
 }
