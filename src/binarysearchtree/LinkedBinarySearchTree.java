@@ -34,24 +34,15 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
      */
     public void add(T o)
     {
-        /*if(this.tree.get(ROOT_KEY) == null){
-            this.tree.set(ROOT_KEY, o);
-        } else {
-            addHelper(ROOT_KEY, o);
-        }        
-        try {
-            this.tree.get(ROOT_KEY);
-            addHelper(ROOT_KEY, o);
-        } catch(NullPointerException e) {
-            this.tree.set(ROOT_KEY, o);
-        }*/
         if(this.tree.isEmpty()){
             // set the object at index 0 to null
             this.tree.add(0, null); 
             this.tree.add(ROOT_KEY, o);
+            generatePotentialChildren(ROOT_KEY);
         } else {
             addHelper(ROOT_KEY, o);
         }
+        
     }
     
     /**
@@ -78,6 +69,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
             // add to left
             if(left_node == null){
                 setLeft(node, o);
+                generatePotentialChildren(getLeft(node));
             } else {
                 addHelper(left_key, o);
             }
@@ -85,6 +77,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
             // add to right
             if(right_node == null){
                 setRight(node, o);
+                generatePotentialChildren(getRight(node));
             } else {
                 addHelper(right_key, o);
             }
@@ -285,5 +278,16 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
     private void setRight(int key, T o)
     {
         this.tree.set(2 * key + 1, o);
+    }
+
+    /**
+     * Because we get array IndexOutOfBounds errors when we add objects out of
+     * order onto ArrayLists, we need to populate potential children with null
+     * objects.
+     */
+    private void generatePotentialChildren(int index)
+    {        
+        this.tree.add(getLeft(index), null);
+        this.tree.add(getRight(index), null);
     }
 }
