@@ -16,7 +16,7 @@ import java.util.Iterator;
  */
 public class LinkedBinarySearchTree<T extends Comparable<? super T>>
 {
-    private ArrayList<T> tree = new ArrayList<>();
+    private ArrayList<T> tree = new ArrayList<T>();
     int ROOT_KEY = 1;
     
     /**
@@ -24,7 +24,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
      */
     public void LinkedBinarySearchTree()
     {
-        this.tree = new ArrayList<>();
+        this.tree = new ArrayList<T>();
     }
     
     /**
@@ -38,7 +38,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
             // set the object at index 0 to null
             this.tree.add(0, null); 
             this.tree.add(ROOT_KEY, o);
-            generatePotentialChildren(ROOT_KEY);
+            growTree(ROOT_KEY);
         } else {
             addHelper(ROOT_KEY, o);
         }
@@ -68,16 +68,16 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
         if (o.compareTo(current_node) < 0){
             // add to left
             if(left_node == null){
+                growTree(getLeft(node));
                 setLeft(node, o);
-                generatePotentialChildren(getLeft(node));
             } else {
                 addHelper(left_key, o);
             }
         } else if(o.compareTo(current_node) >= 0){ 
             // add to right
             if(right_node == null){
+                growTree(getRight(node));
                 setRight(node, o);
-                generatePotentialChildren(getRight(node));
             } else {
                 addHelper(right_key, o);
             }
@@ -125,8 +125,8 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
      * then the child is a leaf and is deleted by setting the current node's 
      * pointer to null. If the child is not the target, recur on the child node.
      * 
-     * @param node
-     * @param target
+     * @param key
+     * @param o
      */
    
     private T removeHelper(int key, T o)
@@ -245,7 +245,8 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
         
         //else   /// search on
         */
-           return findInorderSucessor(left_key);
+
+        return findInorderSucessor(left_key);
     }
     
     private int getParent(int key)
@@ -290,9 +291,20 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
         this.tree.add(getLeft(index), null);
         this.tree.add(getRight(index), null);
     }
-    
+
+    /**
+     * At times we'll need to grow the tree. We'll take the index at the end of
+     * an add operation and see if we need to grow the tree to accommodate the
+     * changes.
+     *
+     * @param index
+     */
     private void growTree(int index)
     {
-        this.tree.ensureCapacity(index);
+        double power = Math.ceil((Math.log(index) / Math.log(2))) + 2;
+        int required_size = (int)Math.pow(2, power);
+        while(required_size > this.tree.size()){
+            this.tree.add(null);
+        }
     }
 }

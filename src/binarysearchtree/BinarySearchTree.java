@@ -49,9 +49,8 @@ public class BinarySearchTree
         testData[12] = new Integer (35);
         testData[13] = new Integer (38);
       
-        LinkedBinarySearchTree<Integer> myBST = new LinkedBinarySearchTree<>();
-          
-          
+        LinkedBinarySearchTree<Integer> myBST = new LinkedBinarySearchTree<Integer>();
+
         for (int i = 0; i < testData.length; i++)
             myBST.add (testData[i]);
          
@@ -74,12 +73,12 @@ public class BinarySearchTree
         click on myBST and choose View Value to see a diagram of your tree.
         */
        
-        //Iterator inOrderIter = myBST.inOrderIterator();
+        Iterator inOrderIter = myBST.inOrderIterator();
 
-        //String treeStr = printValues(inOrderIter);
+        String treeStr = printValues(inOrderIter);
       
         System.out.println("in order");
-        /**System.out.println(treeStr);
+        System.out.println(treeStr);
        
         Iterator levelOrderIter = myBST.levelOrderIterator();
         treeStr = printValues(levelOrderIter);
