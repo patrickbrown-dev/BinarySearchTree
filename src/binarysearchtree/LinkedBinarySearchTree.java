@@ -312,7 +312,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
      * @return maximum value.
      */
 
-    private int getMaximum(int key)
+    public int getMaximum(int key)
     {
         /*
         TREE-MAXIMUM (x)
@@ -388,7 +388,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
 
             @Override
             public boolean hasNext() {
-                return currentIndex < getMaximum(ROOT_KEY);
+                return currentIndex != getMaximum(ROOT_KEY);
             }
 
             @Override

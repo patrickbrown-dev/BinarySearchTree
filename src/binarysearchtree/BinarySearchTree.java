@@ -76,13 +76,15 @@ public class BinarySearchTree
         */
 
        
-        System.out.println("test");
+        //System.out.println("test");
 
         int test = myBST.getSuccessor(1);
         System.out.println(test);
 
+        System.out.println(myBST.getMaximum(1));
+
         Iterator inOrderIter = myBST.inOrderIterator();
-        System.out.println(myBST.getSuccessor(8));
+        //System.out.println(myBST.getSuccessor(8));
 
         String treeStr = printValues(inOrderIter);
 
@@ -122,11 +124,10 @@ public class BinarySearchTree
    
     public static String printValues(Iterator iter){
         StringBuffer sb = new StringBuffer();
-        boolean iterHasNext = iter.hasNext();
+        boolean anyleft = iter.hasNext();
         while(iter.hasNext()){
-            iterHasNext = iter.hasNext();
             sb.append(iter.next()).append(" ");
-            //System.out.println(iter.next());
+            anyleft = iter.hasNext();
         }
         return sb.toString();
     }
