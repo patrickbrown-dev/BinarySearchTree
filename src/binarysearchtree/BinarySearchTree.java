@@ -74,12 +74,18 @@ public class BinarySearchTree
         populated. In the Debug, Variables tab in the left hand pane, right 
         click on myBST and choose View Value to see a diagram of your tree.
         */
+
        
         System.out.println("test");
 
+        int test = myBST.getSuccessor(1);
+        System.out.println(test);
+
         Iterator inOrderIter = myBST.inOrderIterator();
+        System.out.println(myBST.getSuccessor(8));
 
         String treeStr = printValues(inOrderIter);
+
       
         System.out.println("in order");
         System.out.println(treeStr);
@@ -116,8 +122,12 @@ public class BinarySearchTree
    
     public static String printValues(Iterator iter){
         StringBuffer sb = new StringBuffer();
-        while(iter.hasNext())
+        boolean iterHasNext = iter.hasNext();
+        while(iter.hasNext()){
+            iterHasNext = iter.hasNext();
             sb.append(iter.next()).append(" ");
+            //System.out.println(iter.next());
+        }
         return sb.toString();
     }
     

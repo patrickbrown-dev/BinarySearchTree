@@ -231,24 +231,107 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
         T left_value = this.tree.get(left_key);
         int right_key = getRight(key);
         T right_value = this.tree.get(right_key);
-        
-        to_return = left_value;
       
-        if(to_return == null) {
-            // the IOS is node
-            return this.tree.get(key);
-        }
+        if(left_value == null) {
 
-        /**else if(child.left is null)  // child is the IOS
-            node.left <- child.right
-            return child
-        
+        }/* else if(child.left == null){  // child is the IOS
+            //node.left <- child.right
+            //return child
+        }
         //else   /// search on
         */
 
         return findInorderSucessor(left_key);
     }
-    
+
+    /**
+     * Psuedo code from http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/binarySearchTree.htm
+     *
+     * TREE-SUCCESSOR (x)
+     *      if right [x] ≠ NIL
+     *          then return TREE-MINIMUM (right[x])
+     *      else y ← p[x]
+     *          while y ≠ NIL     .AND.    x = right[y] do
+     *              x ← y
+     *              y ← p[y]
+     *          return y
+     *
+     * @param key
+     * @return
+     */
+
+    public int getSuccessor(int key)
+    {
+        //T current_value = this.tree.get(key);
+        //int left_key = getLeft(key);
+        //T left_value = this.tree.get(left_key);
+        int right_key = getRight(key);
+        T right_value = this.tree.get(right_key);
+
+        if(right_value != null){
+            return getMinimum(right_key);
+        } else {
+            int y = getParent(key);
+            while(this.tree.get(y) != null && key == getRight(y)){
+                key = y;
+                y = getParent(y);
+            }
+            return y;
+        }
+    }
+
+    /**
+     * Finds the minimum valued node on subtree.
+     *
+     * @param key
+     * @return minimum valued node.
+     */
+
+    private int getMinimum(int key)
+    {
+        /*
+        while left[x] ≠ NIL do
+            x ← left [x]
+        return x
+        */
+
+        int left_key = getLeft(key);
+        T left_value = this.tree.get(left_key);
+
+        while(left_value != null){
+            key = getLeft(key);
+            left_value = this.tree.get(getLeft(key));
+        }
+        return key;
+    }
+
+    /**
+     * Finds maximum value on subtree
+     *
+     * @param key
+     * @return maximum value.
+     */
+
+    private int getMaximum(int key)
+    {
+        /*
+        TREE-MAXIMUM (x)
+
+        while right[x] ≠ NIL do
+            x ← right [x]
+            return x
+        */
+
+        int right_key = getRight(key);
+        T right_value = this.tree.get(right_key);
+
+        while(right_value != null){
+            key = getRight(key);
+            right_value = this.tree.get(getRight(key));
+        }
+        return key;
+    }
+
     private int getParent(int key)
     {
         // java's floor function returns a *double*, not an int.
@@ -301,16 +384,17 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
 
         Iterator<T> it = new Iterator<T>() {
 
-            private int currentIndex = 0;
+            private int currentIndex = getMinimum(ROOT_KEY);
 
             @Override
             public boolean hasNext() {
-                return currentIndex < tree.size();
+                return currentIndex < getMaximum(ROOT_KEY);
             }
 
             @Override
             public T next() {
-                return tree.get(currentIndex++);
+                currentIndex = getSuccessor(currentIndex);
+                return tree.get(currentIndex);
             }
 
             @Override
