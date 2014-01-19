@@ -98,23 +98,23 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
      * @throws java.lang.Exception
      * @return ?
      */
-    public T remove (T o) throws Exception 
+
+    public T remove (T o) //throws Exception
     {
-        T to_return;
-        
-        // Check if root is null.
-        if (this.tree.get(ROOT_KEY) == null){
-            //throw EmptyCollectionException("tree is empty");
-        } else if (o.compareTo(this.tree.get(ROOT_KEY)) == 0) {
-            this.tree.set(ROOT_KEY, getReplacement(ROOT_KEY));
+        T root_value = this.tree.get(ROOT_KEY);
+
+        if(o.compareTo(root_value) == 0){
+            // is node
+            return root_value;
+        } else if(o.compareTo(root_value) < 0){
+            // somewhere in left subtree
+            return removeHelper(getLeft(ROOT_KEY), o);
+        } else if(o.compareTo(root_value) >= 0){
+            // somewhere is right subtree
+            return removeHelper(getRight(ROOT_KEY), o);
+        } else {
+            return root_value;
         }
-        
-        to_return = removeHelper(ROOT_KEY, o);
-        
-        if(to_return == null){
-            //throw ElementNotFoundException ("not found "+target.toString());
-        }
-        return to_return;
     }
     
     /**
@@ -206,7 +206,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
             // node has both a right and left child- find inorder sucessor
             // go right because of the equals sign in: Left child < Parent <= 
             // Right child 
-            to_return = findInorderSucessor(right_key); 
+            to_return = this.tree.get(getSuccessor(right_key));
             // these next two lines connect the IOS to the departing node's
             // children.
             // result.left <- node.left;  
@@ -219,29 +219,6 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
             }
         }
         return to_return;
-    }
-    
-    private T findInorderSucessor(int key)
-    {
-        T to_return;
-        
-        T current_value = this.tree.get(key);
-        
-        int left_key = getLeft(key);
-        T left_value = this.tree.get(left_key);
-        int right_key = getRight(key);
-        T right_value = this.tree.get(right_key);
-      
-        if(left_value == null) {
-
-        }/* else if(child.left == null){  // child is the IOS
-            //node.left <- child.right
-            //return child
-        }
-        //else   /// search on
-        */
-
-        return findInorderSucessor(left_key);
     }
 
     /**
@@ -384,7 +361,7 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
 
         Iterator<T> it = new Iterator<T>() {
 
-            private int currentIndex = getMinimum(ROOT_KEY);
+            private int currentIndex = 0;
 
             @Override
             public boolean hasNext() {
@@ -393,6 +370,14 @@ public class LinkedBinarySearchTree<T extends Comparable<? super T>>
 
             @Override
             public T next() {
+
+                // The current index will be zero on the first
+                // run, so we find min and then return it.
+                if(currentIndex == 0){
+                    currentIndex = getMinimum(ROOT_KEY);
+                    return tree.get(currentIndex);
+                }
+
                 currentIndex = getSuccessor(currentIndex);
                 return tree.get(currentIndex);
             }

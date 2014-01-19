@@ -25,7 +25,7 @@ public class BinarySearchTree
         the BST rule:  Left child < Parent <= Right child
  
         2) removeElement(T) removes the node containing T, correctly promotes a 
-        sucessor to maintain the BST rule above.
+        successor to maintain the BST rule above.
  
         3) Iterator inOrderIterator() returns an iterator that will produce all 
         tree elements in ascending order. For the test case below this would be:
@@ -109,10 +109,10 @@ public class BinarySearchTree
         the root
         */
       
-        /*
-        try{
-            myBST.removeElement(new Integer (30));
-        } catch (ElementNotFoundException enfex){
+
+        //try{
+        myBST.remove(new Integer (30));
+        /*} catch (ElementNotFoundException enfex){
             System.out.print(enfex.getMessage());
         } catch(EmptyCollectionException ecex){
             System.out.print(ecex.getMessage());
@@ -124,10 +124,8 @@ public class BinarySearchTree
    
     public static String printValues(Iterator iter){
         StringBuffer sb = new StringBuffer();
-        boolean anyleft = iter.hasNext();
         while(iter.hasNext()){
             sb.append(iter.next()).append(" ");
-            anyleft = iter.hasNext();
         }
         return sb.toString();
     }
